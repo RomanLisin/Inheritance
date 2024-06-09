@@ -220,8 +220,8 @@ public:
     }
     void printSP() override
     {
-        P = 2*3,14*radius;
-        S = 3,14*radius*radius;
+        P = 2*3.14*radius;
+        S = 3.14*radius*radius;
         printTxt(S, P);
     }
 };
