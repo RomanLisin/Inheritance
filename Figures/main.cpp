@@ -1,4 +1,5 @@
 #include<iostream>
+#include<ctime>
 
 class Figure
 {
@@ -350,17 +351,33 @@ void main()
 {
     setlocale(LC_ALL, "");
 
-    Square A(4);
-    A.print(); A.printSP();
+    // Generalization  -  обобщение
+    Figure* figures[] =
+    {
+        new Square(6),
+        new Rectangle(3,4),
+        new Circle(10),
+        new Triangle(4,5,6),
+    };
 
-    std::cout << std::endl;
-    Rectangle B(2, 6);
-    B.print(); B.printSP();
+    // Initialisation random number
+    srand(static_cast<unsigned int>(time(0)));
+    int size = sizeof(figures) / sizeof(figures[0]);
+   
+    for (int i = 0; i < size; i++) {
+        int j = rand() % (size - i);
+        Figure* temp = figures[j];
+        for (int k = j; k < size - 1 - i; k++) {
+            figures[k] = figures[k + 1];
+        }
+        figures[size - 1 - i] = temp;
+    }
 
+    // Output in random order
+    for (int i = 0; i < size; i++) {
+        std::cout << std::endl;
+        figures[i]->print();
+    }
     std::cout << std::endl;
-    Circle C(10);
-    C.print(); 
-    //Circle D;
-   // D = C;
-    //D.print();
+
 }
