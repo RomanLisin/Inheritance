@@ -344,7 +344,27 @@ public:
         side = 0;
         std::cout << "TreangleDestructor:\t";
     }
-   
+    void print() override
+    {
+        std::cout << std::endl;
+        for (int i = 0; i < side; i++)
+        {
+            std::cout << "\t";
+            for (int j = i; j <get_sideB()-1; j++)
+            {
+                std::cout << "*";
+            }
+            std::cout << std::endl;
+        }
+        std::cout << std::endl;
+
+    }
+    void printSP() override
+    {
+        P = (side + get_sideB() +sideC);
+        S = (side * get_sideB())/2;
+        printTxt(S, P);
+    }
 };
 
 void main()
@@ -376,7 +396,8 @@ void main()
     // Output in random order
     for (int i = 0; i < size; i++) {
         std::cout << std::endl;
-        figures[i]->print();
+        figures[i]->print(); 
+        figures[i]->printSP();
     }
     std::cout << std::endl;
 
