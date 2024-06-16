@@ -1,4 +1,4 @@
-#define _USE_MATH_DEFINES
+п»ї#define _USE_MATH_DEFINES
 #include<Windows.h>
 #include<iostream>
 using namespace std;
@@ -31,14 +31,14 @@ namespace Geometry
         unsigned int line_width;
         Color color;
     public:
-        // чтобы ограничить ввод данных и реализовать важнейший принцип инкапсуляции
-        // объявим статические константы (можно и дефайнами, но лучше так)
+        // С‡С‚РѕР±С‹ РѕРіСЂР°РЅРёС‡РёС‚СЊ РІРІРѕРґ РґР°РЅРЅС‹С… Рё СЂРµР°Р»РёР·РѕРІР°С‚СЊ РІР°Р¶РЅРµР№С€РёР№ РїСЂРёРЅС†РёРї РёРЅРєР°РїСЃСѓР»СЏС†РёРё
+        // РѕР±СЉСЏРІРёРј СЃС‚Р°С‚РёС‡РµСЃРєРёРµ РєРѕРЅСЃС‚Р°РЅС‚С‹ (РјРѕР¶РЅРѕ Рё РґРµС„Р°Р№РЅР°РјРё, РЅРѕ Р»СѓС‡С€Рµ С‚Р°Рє)
         static const int MIN_START_X = 100;
         static const int MIN_START_Y = 100;
         static const int MAX_START_X = 800;
-        static const int MAX_START_Y = 600;  // это мы применяем в set методах
+        static const int MAX_START_Y = 600;  // СЌС‚Рѕ РјС‹ РїСЂРёРјРµРЅСЏРµРј РІ set РјРµС‚РѕРґР°С…
 
-        // касательно толщины линии
+        // РєР°СЃР°С‚РµР»СЊРЅРѕ С‚РѕР»С‰РёРЅС‹ Р»РёРЅРёРё
         static const int MIN_LINE_WIDTH = 3;
         static const int MAX_LINE_WIDTH = 33;
 
@@ -96,7 +96,7 @@ namespace Geometry
             if (line_width < MIN_LINE_WIDTH)line_width = MIN_LINE_WIDTH;
             if (line_width > MAX_LINE_WIDTH)line_width = MAX_LINE_WIDTH;
             this->line_width = line_width;
-            // не прокатит -!-> this->line_width = line_width<MAX_LINE_WIDTH?
+            // РЅРµ РїСЂРѕРєР°С‚РёС‚ -!-> this->line_width = line_width<MAX_LINE_WIDTH?
         }
         void set_color(Color color)
         {
@@ -104,8 +104,8 @@ namespace Geometry
         }
         virtual void info()const
         {
-            cout << "Площадь фигуры: " << get_area() << endl;
-            cout << "Периметр фигуры: " << get_perimeter() << endl;
+            cout << "РџР»РѕС‰Р°РґСЊ С„РёРіСѓСЂС‹: " << get_area() << endl;
+            cout << "РџРµСЂРёРјРµС‚СЂ С„РёРіСѓСЂС‹: " << get_perimeter() << endl;
             draw();
         }
     };
@@ -159,7 +159,7 @@ namespace Geometry
         // WinApi function
         void draw()const override
         {
-            //HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE); // чтобы отобразить цвет устанавливаем эти две строчки
+            //HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE); // С‡С‚РѕР±С‹ РѕС‚РѕР±СЂР°Р·РёС‚СЊ С†РІРµС‚ СѓСЃС‚Р°РЅР°РІР»РёРІР°РµРј СЌС‚Рё РґРІРµ СЃС‚СЂРѕС‡РєРё
             //SetConsoleTextAttribute(hConsole, color);
             //for (int i = 0; i < height; i++)
             //{
@@ -170,34 +170,34 @@ namespace Geometry
             //    cout << endl;
             //}
             //SetConsoleTextAttribute(hConsole, Color::CONSOLE_DEFAULT);
-            HWND hwnd  /* <== окно */ = GetConsoleWindow();    // для того чтобы рисовать геометрические фигурыы по человечески , нужно работать с окнами, 
-            //    нужно подключить библиотеку WinGDI, нужен котекст устройства, для того чтобы было на чём рисовать.
+            HWND hwnd  /* <== РѕРєРЅРѕ */ = GetConsoleWindow();    // РґР»СЏ С‚РѕРіРѕ С‡С‚РѕР±С‹ СЂРёСЃРѕРІР°С‚СЊ РіРµРѕРјРµС‚СЂРёС‡РµСЃРєРёРµ С„РёРіСѓСЂС‹С‹ РїРѕ С‡РµР»РѕРІРµС‡РµСЃРєРё , РЅСѓР¶РЅРѕ СЂР°Р±РѕС‚Р°С‚СЊ СЃ РѕРєРЅР°РјРё, 
+            //    РЅСѓР¶РЅРѕ РїРѕРґРєР»СЋС‡РёС‚СЊ Р±РёР±Р»РёРѕС‚РµРєСѓ WinGDI, РЅСѓР¶РµРЅ РєРѕС‚РµРєСЃС‚ СѓСЃС‚СЂРѕР№СЃС‚РІР°, РґР»СЏ С‚РѕРіРѕ С‡С‚РѕР±С‹ Р±С‹Р»Рѕ РЅР° С‡С‘Рј СЂРёСЃРѕРІР°С‚СЊ.
 
-             // контекст устройства есть у каждого окна
-            HDC hdc = GetDC(hwnd); // контекст устройства
-            HPEN hPen = CreatePen(PS_DASH, line_width, color + 100);  //PS_SOLID, line_width, color);   // было HPEN hPen = CreatePen(PS_SOLID, 5, color); 
+             // РєРѕРЅС‚РµРєСЃС‚ СѓСЃС‚СЂРѕР№СЃС‚РІР° РµСЃС‚СЊ Сѓ РєР°Р¶РґРѕРіРѕ РѕРєРЅР°
+            HDC hdc = GetDC(hwnd); // РєРѕРЅС‚РµРєСЃС‚ СѓСЃС‚СЂРѕР№СЃС‚РІР°
+            HPEN hPen = CreatePen(PS_DASH, line_width, color + 100);  //PS_SOLID, line_width, color);   // Р±С‹Р»Рѕ HPEN hPen = CreatePen(PS_SOLID, 5, color); 
 
             HBRUSH hBrush = CreateSolidBrush(color);
-            // собрали инструменты, которыми мы будем пользоваться, теперь их нужно выбрать
+            // СЃРѕР±СЂР°Р»Рё РёРЅСЃС‚СЂСѓРјРµРЅС‚С‹, РєРѕС‚РѕСЂС‹РјРё РјС‹ Р±СѓРґРµРј РїРѕР»СЊР·РѕРІР°С‚СЊСЃСЏ, С‚РµРїРµСЂСЊ РёС… РЅСѓР¶РЅРѕ РІС‹Р±СЂР°С‚СЊ
             SelectObject(hdc, hPen);
             SelectObject(hdc, hBrush);
 
-            //  рисуем
-            ::Rectangle(hdc, start_x, start_y, start_x + width, start_y + height);  // было ::Rectangle(hdc, 100, 100, 300, 250);
-            //  удаляем
+            //  СЂРёСЃСѓРµРј
+            ::Rectangle(hdc, start_x, start_y, start_x + width, start_y + height);  // Р±С‹Р»Рѕ ::Rectangle(hdc, 100, 100, 300, 250);
+            //  СѓРґР°Р»СЏРµРј
             DeleteObject(hBrush);
             DeleteObject(hPen);
 
             ReleaseDC(hwnd, hdc);
         }
 
-        //   заменяет блок функций вывода в main вместе с virtual info в базовом классе
+        //   Р·Р°РјРµРЅСЏРµС‚ Р±Р»РѕРє С„СѓРЅРєС†РёР№ РІС‹РІРѕРґР° РІ main РІРјРµСЃС‚Рµ СЃ virtual info РІ Р±Р°Р·РѕРІРѕРј РєР»Р°СЃСЃРµ
         void info()const override
         {
             cout << typeid(*this).name() << endl;
-            cout << "Ширина прямоугольника: " << get_width() << endl;
-            cout << "Высота прямоугольника: " << get_height() << endl;
-            Shape::info();  // в дочернем вызываем info из базового класса
+            cout << "РЁРёСЂРёРЅР° РїСЂСЏРјРѕСѓРіРѕР»СЊРЅРёРєР°: " << get_width() << endl;
+            cout << "Р’С‹СЃРѕС‚Р° РїСЂСЏРјРѕСѓРіРѕР»СЊРЅРёРєР°: " << get_height() << endl;
+            Shape::info();  // РІ РґРѕС‡РµСЂРЅРµРј РІС‹Р·С‹РІР°РµРј info РёР· Р±Р°Р·РѕРІРѕРіРѕ РєР»Р°СЃСЃР°
         }
     };
     class Square :public Rectangle
@@ -208,7 +208,7 @@ namespace Geometry
         void info()const override
         {
             cout << typeid(*this).name() << endl;
-            cout << "Длина стороны: " << get_width() << endl;
+            cout << "Р”Р»РёРЅР° СЃС‚РѕСЂРѕРЅС‹: " << get_width() << endl;
             Shape::info();
         }
     };
@@ -268,8 +268,8 @@ namespace Geometry
         void info()const override
         {
             cout << typeid(*this).name() << endl;
-            cout << "Радиус круга: " << get_radius() << endl;
-            cout << "Диаметр круга: " << get_diameter() << endl;
+            cout << "Р Р°РґРёСѓСЃ РєСЂСѓРіР°: " << get_radius() << endl;
+            cout << "Р”РёР°РјРµС‚СЂ РєСЂСѓРіР°: " << get_diameter() << endl;
             Shape::info();
         }
 
@@ -282,10 +282,10 @@ void main()
     setlocale(LC_ALL, "");
     //Shape shape(Color::CONSOLE_BLUE)
     Geometry::Rectangle rectangle(120, 80, 0, 0, 5, Geometry::Color::RED);
-    /* cout << "Ширина: " << rectangle.get_width() << endl;
-     cout << "Высота: " << rectangle.get_height() << endl;
-     cout << "Площадь: " << rectangle.get_area() << endl;
-     cout << "Периметр: " << rectangle.get_perimeter() << endl;
+    /* cout << "РЁРёСЂРёРЅР°: " << rectangle.get_width() << endl;
+     cout << "Р’С‹СЃРѕС‚Р°: " << rectangle.get_height() << endl;
+     cout << "РџР»РѕС‰Р°РґСЊ: " << rectangle.get_area() << endl;
+     cout << "РџРµСЂРёРјРµС‚СЂ: " << rectangle.get_perimeter() << endl;
      rectangle.draw();*/
     rectangle.info();
 
@@ -296,5 +296,5 @@ void main()
     circle.info();
 
 
-    cin.get(); // задержка появления надписи(ожидание ввода), чтобы не затирала фигуру
+    cin.get(); // Р·Р°РґРµСЂР¶РєР° РїРѕСЏРІР»РµРЅРёСЏ РЅР°РґРїРёСЃРё(РѕР¶РёРґР°РЅРёРµ РІРІРѕРґР°), С‡С‚РѕР±С‹ РЅРµ Р·Р°С‚РёСЂР°Р»Р° С„РёРіСѓСЂСѓ
 }
