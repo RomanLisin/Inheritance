@@ -24,10 +24,15 @@ class Square :public Figure
     {
         return side;
     }
-    char** get_chFigure()const
+    /*const char** get_chFigure()const
+    {
+        return ch_Fig;
+    }*/
+      char** get_chFigure()
     {
         return ch_Fig;
     }
+
     const double get_S()const
     {
         return S;
